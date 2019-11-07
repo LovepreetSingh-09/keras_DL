@@ -19,8 +19,8 @@ input_shape = X_train.shape[1:]
 
 filters=[64,32]
 kernel_size=3
-batch_size=32
-latent_dim=16
+batch_size=128
+latent_dim=2
 
 inputs=Input(shape=input_shape,name='encoder_input')
 x=inputs
@@ -53,14 +53,17 @@ plot_model(autoencoder,to_file='autoencoder_mnist.png',show_shapes=True)
 
 autoencoder.compile(loss='mse',optimizer='adam')
 
-epochs=10
+epochs=1
 autoencoder.fit(X_train,X_train,validation_data=(X_test,X_test),epochs=epochs,shuffle=True,batch_size=batch_size)
 
 x_decoded=autoencoder.predict(X_test)
+x_decoded[1][:,:,-1].shape
+plt.imshow(x_decoded[1][:,:,-1])
 
 image_size=28
-imgs=np.concatenate(X_test[:8],x_decoded[:8])
-imgs=np.reshape(4,4,image_size,image_size)
+imgs=np.concatenate([X_test[:8],x_decoded[:8]])
+imgs=imgs.reshape([4,4,image_size,image_size])
+v=np.array([np.hstack(i) for i in imgs]);v.shape
 imgs=np.vstack([np.hstack(i) for i in imgs])
 print(imgs.shape)
 plt.figure()
@@ -69,3 +72,41 @@ plt.title('Input:1-2 rows  Output:3-4 rows')
 plt.imshow(imgs,cmap='gray')
 plt.savefig('input_decoded_mnist.png')
 plt.show()
+
+def plot_results(model,data,batch_size,model_name='autoencoder_2dim'):
+    encoder,decoder=model
+    x_test,y_test=data
+    z=encoder.predict(x_test,batch_size=batch_size)
+    plt.figure(figsize=(12,10))
+    plt.scatter(z[:,0],z[:,1],c=y_test)
+    plt.colorbar()
+    plt.show()
+
+    n=30
+    digit_size=28
+    figure=np.zeros([n*digit_size,n*digit_size])
+    grid_x=np.linspace(-2,12,n)
+    grid_y=np.linspace(2,12,n)[::-1]
+    for i,xi in enumerate(grid_x):
+        for j,yj in enumerate(grid_y):
+            z=np.array([[xi,yj]])
+            x_decoded=decoder.predict(z)
+            print(x_decoded.shape)
+            print(x_decoded[0].shape)
+            digit=x_decoded[0].reshape(28,28)
+            print(digit.shape)
+            figure[i*digit_size:(i+1)*digit_size,j*digit_size:(j+1)*digit_size]=digit
+    plt.figure(figsize=(6,10))
+    start_range=0
+    end_range=n*digit_size+1
+    pixel_range=np.arange(start_range,end_range,digit_size)
+    sample_range_x = np.round(grid_x, 1)
+    sample_range_y = np.round(grid_y, 1)
+    plt.xticks(pixel_range, sample_range_x)
+    plt.yticks(pixel_range, sample_range_y)
+    plt.xlabel("z[0]")
+    plt.ylabel("z[1]")
+    plt.imshow(figure,cmap="Greys_r")
+    plt.show()
+
+plot_results((encoder,decoder),data=(X_test,y_test),batch_size=32)

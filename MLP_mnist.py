@@ -42,15 +42,17 @@ for j,i in enumerate(c[-10:]):
     plt.axis('off')
 plt.show()
 
-fig,ax=plt.subplots(2,5,figsize=(20,10))
-for i,a in zip(targets,ax.ravel()):
-    print(i)
-    c=np.where(y_train_==i)
-    c=np.array(c).reshape(-1)
-    print(c[0])
-    a.imshow(x_train[c[0]],cmap='gray')
-plt.show()
+def plot_images(x_train,y_train_):
+    fig,ax=plt.subplots(2,5,figsize=(20,10))
+    for i,a in zip(targets,ax.ravel()):
+        print(i)
+        c=np.where(y_train_==i)
+        c=np.array(c).reshape(-1)
+        print(c[0])
+        a.imshow(x_train[c[0]],cmap='gray')
+    plt.show()
     
+plot_images(x_train,y_train_)
 
 y_train=to_categorical(y_train_);y_train.shape
 y_test=to_categorical(y_test_)    

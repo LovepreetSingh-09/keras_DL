@@ -85,7 +85,7 @@ def plot_images(generator,noise_input,show=False,step=0,model_name='gan'):
     os.makedirs(model_name,exist_ok=True)
     filename = os.path.join(model_name, "%05d.png" % step)
     images=generator.predict(noise_input)
-    plt.figure(figsize=(2.2, 2.2))
+    plt.figure(figsize=(7, 7))
     num_images = images.shape[0]
     image_size = images.shape[1]
     rows = int(math.sqrt(noise_input.shape[0]))

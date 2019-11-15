@@ -106,10 +106,7 @@ def train(Model, x_train, params):
         log = "%s [adversarial loss: %f, acc: %f]" % (log, loss, acc)
         print(log)
         if (i + 1) % save_interval == 0:
-            if (i + 1) == train_steps:
-                show = True
-            else:
-                show = False
+            show=True
             plot_images(generator, noise_input=noise_input,
                         show=show, step=(i + 1), model_name=model_name)
     generator.save(model_name+'.h5')

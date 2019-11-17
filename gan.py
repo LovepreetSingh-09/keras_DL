@@ -83,7 +83,7 @@ def discriminator(inputs,image_size,activation='sigmoid',num_labels=None,num_cod
 def train(Model, x_train, params):
     generator, discriminator, adversarial = Model
     batch_size, latent_size, train_steps, model_name = params
-    save_interval = 500
+    save_interval = 200
     noise_input = np.random.uniform(-1.0, 1.0, size=(16, latent_size))
     train_size = x_train.shape[0]
     for i in range(train_steps):
@@ -122,7 +122,7 @@ def plot_images(generator,noise_input,noise_label=None, noise_codes=None,
         if noise_codes is not None:
             noise_input += noise_codes
     images = generator.predict(noise_input)
-    plt.figure(figsize=(2.2, 2.2))
+    plt.figure(figsize=(7 ,7))
     num_images = images.shape[0]
     image_size = images.shape[1]
     for i in range(num_images):

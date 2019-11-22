@@ -28,7 +28,7 @@ def generator(inputs,image_size,activation='sigmoid',codes=None,labels=None):
         x=concatenate(inputs,axis=1)
     elif codes is not None:
         inputs=[inputs,codes]
-        x=concatenate(inputs,codes)
+        x=concatenate(inputs,axis=1)
     else:
         x=inputs
     x=Dense(im_res*im_res*filter_layers[0])(x)
@@ -75,7 +75,7 @@ def discriminator(inputs,image_size,activation='sigmoid',num_labels=None,num_cod
             outputs=[outputs,labels,code1,code2]
     elif num_codes is not None:
         z0_recon=Dense(num_codes)(x)
-        z0_recon=Activation('tanh')(x)
+        z0_recon=Activation('tanh')(z0_recon)
         outputs=[outputs,z0_recon]
     return Model(inputs,outputs)
 

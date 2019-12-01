@@ -13,7 +13,6 @@ from keras.models import load_model
 import keras.backend as k
 
 import numpy as np
-import math
 import matplotlib.pyplot as plt
 import os
 import argparse

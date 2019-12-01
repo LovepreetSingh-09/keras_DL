@@ -169,11 +169,9 @@ def build_and_train():
     lr = 2e-4
     decay = 6e-8
     input_shape = (image_size, image_size, 1)
-    label_shape = (num_labels, )
     z_dim = 50
     z_shape = (z_dim, )
     feature1_dim = 256
-    feature1_shape = (feature1_dim, )
     inputs = Input(shape=input_shape)
     dis0 = gan.discriminator(inputs,image_size, num_codes=z_dim)
     optimizer = RMSprop(lr=lr, decay=decay)

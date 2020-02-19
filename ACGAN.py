@@ -80,11 +80,13 @@ def build_and_train():
     optimizer=RMSprop(lr=lr,decay=decay)
     discriminator.compile(loss=loss,optimizer=optimizer,metrics=['accuracy'])
     discriminator.summary()
+    
     inputs=Input(shape=(latent_size,))
     labels=Input(shape=(num_labels,))
     generator=gan.generator(inputs=inputs,image_size=image_size,labels=labels)
     generator.summary()
     discriminator.trainable=False
+
     adversarial=Model([inputs,labels],discriminator(generator([inputs,labels])))    
     optimizer=RMSprop(lr=lr*0.5,decay=decay*0.5)
     adversarial.compile(loss=loss,optimizer=optimizer,metrics=['accuracy'])

@@ -66,6 +66,7 @@ imgs=imgs.reshape([4,4,image_size,image_size])
 v=np.array([np.hstack(i) for i in imgs]);v.shape
 imgs=np.vstack([np.hstack(i) for i in imgs])
 print(imgs.shape)
+
 plt.figure()
 plt.axis('off')
 plt.title('Input:1-2 rows  Output:3-4 rows')

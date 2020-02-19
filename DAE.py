@@ -76,9 +76,11 @@ imgs=imgs.reshape((3*rows,col,image_size,image_size))
 print(imgs.shape)
 imgs=np.split(imgs,rows,axis=1)
 print(np.array(imgs).shape)
+
 imgs=np.vstack(imgs);imgs.shape
 imgs=np.vstack([np.hstack(i) for i in imgs]);imgs.shape
 imgs=(imgs*255.).astype(np.uint8)
+
 plt.figure(figsize=(10,20))
 plt.axis('off')
 plt.title('Original:Top rows Corrupted:middle-rows  Denoised:third-rows')

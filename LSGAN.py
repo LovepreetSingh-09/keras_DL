@@ -65,4 +65,3 @@ if __name__=='__main__':
     else:
         build_and_train()
 
-

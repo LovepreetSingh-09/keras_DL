@@ -1,12 +1,12 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from keras.layers import Dense,Conv2D,Conv2DTranspose,Flatten,Activation,Input
-from keras.models import Model
-from keras.utils import plot_model
-from keras.layers import Reshape
-from keras.datasets import mnist
-import keras.backend as k
+from tensorflow.keras.layers import Dense,Conv2D,Conv2DTranspose,Flatten,Activation,Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.utils import plot_model
+from tensorflow.keras.layers import Reshape
+from tensorflow.keras.datasets import mnist
+import tensorflow.keras.backend as k
 
 (x_train,y_train),(x_test,y_test)=mnist.load_data()
 
